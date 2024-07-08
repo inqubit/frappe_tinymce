@@ -145,10 +145,10 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
                     endOffset = rng.endOffset,
                     current = walker.current();
 
-                console.log(rng);
+                console.log('RANGE', rng);
                 do {
                     if (current.nodeName === '#text') {
-                        console.log(current);
+                        console.log('CURRENT', current);
                         handler(current, method, {
                             first: current === first,
                             last: current === last,
@@ -165,6 +165,9 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
                 editor.isNotDirty = true;
                 editor.focus();
                 editor.selection.moveToBookmark(bm);
+
+                // Clear out the HTML inside the mce_0 div, which renders just under the Frappe Control's label.
+                $('#mce_0').html('')
             }
 
             const getMenuItems = function () {
