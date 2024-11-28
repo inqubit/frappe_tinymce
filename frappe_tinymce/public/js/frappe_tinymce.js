@@ -334,7 +334,12 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
                     that.parse_validate_and_set_in_model(e.level.content);
                 });
                 editor.on('init', function (e) {
-                    editor.setContent(that.value);
+                    editor.setContent(that.value || "");
+                    
+                    // Fix the z index to prevent overlapping the link field dropdown.
+                    let tinyMCEContainer = $('.tox-editor-container');
+                    tinyMCEContainer.css('z-index', 0);
+                    console.log("tinyMCEContainer", tinyMCEContainer);
                 });
             }
         });
