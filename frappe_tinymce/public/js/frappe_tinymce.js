@@ -347,15 +347,19 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
     }
 
     set_formatted_input(value) {
-        if (this.frm) {
-            if (!this.frm.doc.__setContent) {
-                if (value) {
-                    this.activeEditor.setContent(value)
-                } else {
-                    this.activeEditor.setContent("")
-                }
-                //this.frm.doc.__setContent = 1 // Fix for Terms and Conditions selection.
-            }
+        if (!this.frm) return;
+
+        if (!value) {
+            this.activeEditor.setContent("");
+            return;
+        }
+
+        let bookmark = this.activeEditor.selection ? this.activeEditor.selection.getBookmark(2, true) : null;
+        
+        this.activeEditor.setContent(value);
+
+        if (bookmark) {
+            this.activeEditor.selection.moveToBookmark(bookmark);
         }
     }
 
