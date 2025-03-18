@@ -308,11 +308,15 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
             toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment | footnotes | mergetags | customHRButton | case | customTemplate ',
             font_size_formats: '10px 11px 12px 14px 15px 16px 18px 24px 36px',
             plugins: [
-              'autolink', 'charmap', 'emoticons', 'fullscreen', 'help',
-              'image', 'link', 'lists', 'searchreplace',
-              'table', 'visualblocks', 'visualchars', 'wordcount', 'media', 'anchor', 'case', 
-              'customTemplate'
+                'advlist', 'anchor', 'autolink', 'case', 'charmap', 'code', 'customTemplate', 'emoticons',
+                'fullscreen', 'help', 'hr', 'image', 'insertdatetime', 'link', 'lists', 'media', 'nonbreaking',
+                'pagebreak', 'paste', 'preview', 'print', 'searchreplace', 'table', 'template', 'visualblocks',
+                'visualchars', 'wordcount'
             ],
+            menubar: 'favs file edit view insert format tools table help',
+            menu: {
+                favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+            },
             powerpaste_googledocs_import: "prompt",
             entity_encoding: 'raw',
             convert_urls: true,
@@ -336,7 +340,24 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
                 editor.on('init', function (e) {
                     editor.setContent(that.value);
                 });
-            }
+            },
+            relative_urls: false,
+            remove_script_host: false,
+            document_base_url: "{{source_domain}}",
+            formats: {
+                removeformat: [
+                    {
+                        selector: 'b,strong,em,i,font,u,strike,s,sub,sup,dfn,code,samp,kbd,var,cite,mark,q,del,ins,small,h1,h2,h3,h4,h5,h6,li,ul,a',
+                        remove: 'all',
+                        split: true,
+                        block_expand: true,
+                        expand: false,
+                        deep: true
+                    },
+                    { selector: 'span', attributes: ['style', 'class'], remove: 'empty', split: true, expand: false, deep: true },
+                    { selector: '*', attributes: ['style', 'class'], split: false, expand: false, deep: true }
+                ]
+            },
         });
         this.activeEditor = tinymce.activeEditor
     }
