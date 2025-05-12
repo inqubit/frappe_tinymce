@@ -338,6 +338,8 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
                     that.parse_validate_and_set_in_model(e.level.content);
                 });
                 editor.on('init', function (e) {
+                    $('.tox-editor-container').css('z-index', '0');
+                    $('.tox-throbber').css('z-index', '0');
                     editor.setContent(that.value);
                 });
             },
